@@ -1,0 +1,6 @@
+# - Config file for the @PROJECT_NAME@ package
+
+file(GLOB INSTALL_FILES_DIR @PROJECT_SOURCE_DIR@/install/*.*)
+if(INSTALL_FILES_DIR)
+    file(COPY ${INSTALL_FILES_DIR} DESTINATION @CONF_INSTALL_DIR@/install)
+endif()

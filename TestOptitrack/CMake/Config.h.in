@@ -1,0 +1,13 @@
+// This file is created in configuration time
+// Variables can be added if we want to add options before compilation
+// so compiler can use them.
+
+// Project Variables
+#define ${MYPROJECT_NAME}_PROJECT_NAME "${MYPROJECT_NAME}"
+#define ${MYPROJECT_NAME}_VERSION_MAJOR ${${MYPROJECT_NAME}_VERSION_MAJOR}
+#define ${MYPROJECT_NAME}_VERSION_MINOR ${${MYPROJECT_NAME}_VERSION_MINOR}
+
+// Configuration Variables
+#if ${${PROJECT_NAME}_CMAKE_DEBUG}
+#define ${MYPROJECT_NAME}_DEBUG_FLAG TRUE
+#endif
