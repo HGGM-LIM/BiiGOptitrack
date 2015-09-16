@@ -494,7 +494,7 @@ namespace Optitrack
 					for (unsigned int i = 0; i < this->GetNumberOfAttachedTools(); ++i)  // use mutexed methods to access tool container
 					{
 						OptitrackTool::Pointer currentTool = this->GetOptitrackTool(i);
-						if (currentTool !=  0)
+						if (currentTool.IsNotNull())
 						{
 							currentTool->UpdateTool();
 							//fprintf(stdout, "Updating tool named: %s", currentTool->GetToolName().c_str());
