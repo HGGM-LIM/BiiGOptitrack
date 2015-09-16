@@ -2,7 +2,7 @@
 # Date: 2015-06-29
 
 set(EP_OPTION_NAME "USE_${EP_NAME}")
-set(EP_REQUIRED_PROJECTS Python Git)
+set(EP_REQUIRED_PROJECTS Git)
 set(EP_URL "https://github.com/nenetto/IGTLinkPython.git")
 set(EP_OPTION_DESCRIPTION "Python IGTLink Client")
 set(EP_OPTION_DEFAULT ON)
