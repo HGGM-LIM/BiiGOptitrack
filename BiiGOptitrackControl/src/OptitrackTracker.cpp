@@ -772,11 +772,11 @@ namespace Optitrack
 				// Camera pair is watching more than one marker
 				fprintf(stdout, "Camera %i is not visualizing just one marker.\n", cameraIndex);
 				fprintf(stdout, "[ABORTING]: Please make sure only one marker is visible in the field of view of each camera.\n");
-				return ResultType::FAILURE;
+				return FAILURE;
 			}
 		}
 
-		return ResultType::SUCCESS;
+		return SUCCESS;
     }
 
 	int CameraCorrespondeceBetweenAPIandTrackingTools(int numberOfCameras, int CameraNumber)

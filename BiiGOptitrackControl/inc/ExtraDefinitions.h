@@ -13,11 +13,9 @@ typedef itk::MutexLockHolder<itk::FastMutexLock> MutexLockHolder;
 /**
 * \brief Different options for the result of the functions
 */
-class enum
-{
-    FAILURE = 0,
-    SUCCESS = 1
-} ResultType;
+typedef ResultType uint
+#define FAILURE 0
+#define SUCCESS 1
 
 
 
