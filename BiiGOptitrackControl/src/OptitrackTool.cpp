@@ -253,7 +253,7 @@ namespace Optitrack
 		}
 
 		tinyxml2::XMLElement * pRoot = xmlDoc.FirstChildElement("NPTrackingTools");
-		if (pRoot == nullptr) eResult = tinyxml2::XMLError::XML_ERROR_FILE_READ_ERROR;
+		if (pRoot ==  0) eResult = tinyxml2::XMLError::XML_ERROR_FILE_READ_ERROR;
 		XMLCheckResult(eResult);
 		if (eResult != tinyxml2::XMLError::XML_SUCCESS){
 			fprintf(stdout, "#ERROR# - [OptitrackTool::SetToolByXmlFile]: Problem accesing to NPTrackingTools element! \n");
@@ -262,7 +262,7 @@ namespace Optitrack
 
 		//FileType
 		tinyxml2::XMLElement * pFileType = pRoot->FirstChildElement("FileType");
-		if (pFileType == nullptr) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+		if (pFileType ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
 		XMLCheckResult(eResult);
 		if (eResult != tinyxml2::XMLError::XML_SUCCESS){
 			fprintf(stdout, "#ERROR# - [OptitrackTool::SetToolByXmlFile]: Problem parsing the element FileType! \n");
@@ -347,7 +347,7 @@ namespace Optitrack
 
 		//ToolName
 		tinyxml2::XMLElement *pToolName = pRoot->FirstChildElement("ToolName");
-		if (pToolName == nullptr) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+		if (pToolName ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
 		XMLCheckResult(eResult);
 		if (eResult != tinyxml2::XMLError::XML_SUCCESS){
 			fprintf(stdout, "#ERROR# - [OptitrackTool::SetToolByXmlFile]: Problem parsing the element ToolName! \n");
@@ -361,7 +361,7 @@ namespace Optitrack
 
 		//ToolMarkersNum
 		tinyxml2::XMLElement *pToolMarkersNum = pRoot->FirstChildElement("ToolMarkersNum");
-		if (pToolMarkersNum == nullptr) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+		if (pToolMarkersNum ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
 		XMLCheckResult(eResult);
 		if (eResult != tinyxml2::XMLError::XML_SUCCESS){
 			fprintf(stdout, "#ERROR# - [OptitrackTool::SetToolByXmlFile]: Problem parsing the element ToolMarkersNum! \n");
@@ -376,7 +376,7 @@ namespace Optitrack
 
 		//ToolMarkers
 		tinyxml2::XMLElement *pElement = pRoot->FirstChildElement("ToolMarkers");
-		if (pElement == nullptr) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+		if (pElement ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
 		XMLCheckResult(eResult);
 		if (eResult != tinyxml2::XMLError::XML_SUCCESS){
 			fprintf(stdout, "#ERROR# - [OptitrackTool::SetToolByXmlFile]: Problem parsing the element ToolMarkers! \n");
@@ -387,7 +387,7 @@ namespace Optitrack
 		this->m_CalibrationPoints = new float[3 * this->GetNumberOfMarkers()];
 		int counter = 0, markerLocation = 0;
 		tinyxml2::XMLElement * pListElement = pElement->FirstChildElement("m1");
-		while ((counter < (toolNumberOfMarkers * 3)) && (pListElement != nullptr))
+		while ((counter < (toolNumberOfMarkers * 3)) && (pListElement !=  0))
 		{
 			eResult = pListElement->QueryFloatAttribute("x", &this->m_CalibrationPoints[counter * 3 + 0]);
 			XMLCheckResult(eResult);
@@ -417,7 +417,7 @@ namespace Optitrack
 		//ToolPivot
 		this->m_PivotPoint = new float[3];
 		tinyxml2::XMLElement *pToolPivot = pRoot->FirstChildElement("ToolPivot");
-		if (pToolPivot == nullptr) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+		if (pToolPivot ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
 		XMLCheckResult(eResult);
 		if (eResult != tinyxml2::XMLError::XML_SUCCESS){
 			fprintf(stdout, "#ERROR# - [OptitrackTool::SetToolByXmlFile]: Problem parsing the element ToolPivot! \n");

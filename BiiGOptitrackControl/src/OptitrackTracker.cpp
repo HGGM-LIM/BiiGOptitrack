@@ -468,7 +468,7 @@ namespace Optitrack
 					for (unsigned int i = 0; i < this->GetNumberOfAttachedTools(); ++i)  // use mutexed methods to access tool container
 					{
 						OptitrackTool::Pointer currentTool = this->GetOptitrackTool(i);
-						if (currentTool != nullptr)
+						if (currentTool !=  0)
 						{
 							currentTool->UpdateTool();
 							//fprintf(stdout, "Updating tool named: %s", currentTool->GetToolName().c_str());
@@ -582,11 +582,13 @@ namespace Optitrack
 
 	/*! \brief Setting of camera parameter.
 	*
-	* This function allows to set some of the camera settings to the whole set of cameras, such as exposure, threshold, illumination, and video mode.	*
+	* This function allows to set some of the camera settings to the whole set of cameras, such as exposure, threshold, illumination, and video mode.
+	*
 	* @param exposure: Valid values are 1-480.
 	* @param threshold: Pixels with intensities darker than this value will be filtered out when using processed video modes. Valid values are 0-255.
 	* @param intensity: This should be set to 15 for almost all situations. The recommended method for reducing IR LED brightness is to lower the
-    * camera exposure setting, this has the effect of shortening the IR strobe duration. Valid values are 0-15.	* @param videoType: The desired in-camera video processing mode. Valid values are: Segment Mode (0), Grayscale Mode (1), Object Mode (2), 
+    * camera exposure setting, this has the effect of shortening the IR strobe duration. Valid values are 0-15.
+	* @param videoType: The desired in-camera video processing mode. Valid values are: Segment Mode (0), Grayscale Mode (1), Object Mode (2), 
 	* Precision Mode (4), and MJPEG Mode (V100R2 only) (6).
 	* @return Result of the camera parameters setting: SUCCESS or FAILURE.
 	*/
@@ -668,7 +670,7 @@ namespace Optitrack
 	OptitrackTool::Pointer OptitrackTracker::GetOptitrackTool( unsigned int toolID)
     {
         //fprintf(stdout, "<INFO> - [OptitrackTracker::GetOptitrackTool]\n");
-        OptitrackTool::Pointer t = nullptr;
+        OptitrackTool::Pointer t =  0;
 
         MutexLockHolder toolsMutexLockHolder(*m_ToolsMutex); // lock and unlock the mutex ITK
         if(toolID < this->GetNumberOfAttachedTools())
@@ -687,7 +689,7 @@ namespace Optitrack
     OptitrackTool::Pointer OptitrackTracker::GetOptitrackToolByName( std::string toolName )
     {
         //fprintf(stdout, "<INFO> - [OptitrackTracker::GetOptitrackToolByName]\n");
-        OptitrackTool::Pointer t = nullptr;
+        OptitrackTool::Pointer t =  0;
 
 
         unsigned int toolCount = this->GetNumberOfAttachedTools();
@@ -983,7 +985,7 @@ namespace Optitrack
         }
 
         tinyxml2::XMLElement * pRoot = xmlDoc.FirstChildElement("ConfigurationFile");
-        if (pRoot == nullptr) eResult = tinyxml2::XMLError::XML_ERROR_FILE_READ_ERROR;
+        if (pRoot ==  0) eResult = tinyxml2::XMLError::XML_ERROR_FILE_READ_ERROR;
         XMLCheckResult(eResult);
         if (eResult != tinyxml2::XMLError::XML_SUCCESS){
             fprintf(stdout, "[XML READING ERROR] Problem accesing to NPTrackingTools element! \n");
@@ -993,7 +995,7 @@ namespace Optitrack
 
         //CalibrationFile
         tinyxml2::XMLElement * pElement = pRoot->FirstChildElement("CalibrationFile");
-        if (pElement == nullptr) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+        if (pElement ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
         XMLCheckResult(eResult);
         if (eResult != tinyxml2::XMLError::XML_SUCCESS){
             fprintf(stdout, "[XML READING ERROR] Problem parsing the element CalibrationFile! \n");
@@ -1013,7 +1015,7 @@ namespace Optitrack
 
         //CameraParameters
         pElement = pRoot->FirstChildElement("CameraParameters");
-        if (pElement == nullptr) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+        if (pElement ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
         if (eResult == tinyxml2::XMLError::XML_SUCCESS){ //If CalibrationError element do not exist, attributes are not accessed.
             eResult = pElement->QueryFloatAttribute("Exposure", &camparamExposure);
             XMLCheckResult(eResult);
@@ -1028,7 +1030,7 @@ namespace Optitrack
 
         //ToolNumber
         pElement = pRoot->FirstChildElement("ToolNumber");
-        if (pElement == nullptr) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+        if (pElement ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
         XMLCheckResult(eResult);
         if (eResult != tinyxml2::XMLError::XML_SUCCESS){
             fprintf(stdout, "[XML READING ERROR] Problem parsing the element ToolMarkersNum! \n");
@@ -1040,7 +1042,7 @@ namespace Optitrack
 
         //Tools
         pElement = pRoot->FirstChildElement("ToolsList");
-        if (pElement == nullptr) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+        if (pElement ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
         XMLCheckResult(eResult);
         if (eResult != tinyxml2::XMLError::XML_SUCCESS){
             fprintf(stdout, "[XML READING ERROR] Problem parsing the element Tools! \n");
@@ -1048,7 +1050,7 @@ namespace Optitrack
         }
         int counter = 0;
         tinyxml2::XMLElement * pListElement = pElement->FirstChildElement("Tool");
-        while ((counter < toolNumber) && (pListElement != nullptr))
+        while ((counter < toolNumber) && (pListElement !=  0))
         {
             try
             {
