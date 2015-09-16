@@ -1,4 +1,4 @@
-#include "OptitrackTool.h"
+ #include "OptitrackTool.h"
 
 //tinyxml2 lib
 #include <tinyxml2.h>

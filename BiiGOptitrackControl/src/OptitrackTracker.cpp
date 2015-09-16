@@ -105,7 +105,7 @@ namespace Optitrack
             fprintf(stdout, "<INFO> - [OptitrackTracker::~OptitrackTracker]: in Tracking State -> Stopping Tracking \n");
             result = this->StopTracking();
 
-            if(result == SUCCESS){
+            if(result == ResultType_SUCCESS){
                 fprintf(stdout, "<INFO> - [OptitrackTracker::~OptitrackTracker]: Device Stopped \n");
             }
             else
@@ -120,7 +120,7 @@ namespace Optitrack
             //fprintf(stdout, "<INFO> - [OptitrackTracker::~OptitrackTracker]: Calling InternalClose \n");
             result = this->Close();
 
-            if(result == SUCCESS)
+            if(result == ResultType_SUCCESS)
             {
                 fprintf(stdout, "<INFO> - [OptitrackTracker::~OptitrackTracker]: InternalClose SUCCESS \n");
             }
@@ -245,7 +245,7 @@ namespace Optitrack
 
 			//fprintf(stdout, "<INFO> - [OptitrackTracker::InternalClose]: Stopping the Tracking\n");
 			//ResultType resultStop = this->StopTracking();
-			//if (resultStop == FAILURE)
+			//if (resultStop == ResultType_FAILURE)
 			//{
 			//	fprintf(stdout, "#ERROR# - [OptitrackTracker::InternalClose]: Cannot Stop the Tracking\n");
 			//	this->SetState(previous_state);
@@ -315,7 +315,7 @@ namespace Optitrack
         {
             fprintf(stdout, "<INFO> - [OptitrackTracker::InternalReset]: Stopping the Tracking and Reset to calibration\n");
             ResultType resultStop = this->StopTracking();
-            if(resultStop == FAILURE)
+            if(resultStop == ResultType_FAILURE)
             {
                 fprintf(stdout, "#ERROR# - [OptitrackTracker::InternalReset]: Cannot Stop the Tracking\n");
                 this->SetState(previous_state);
@@ -345,7 +345,7 @@ namespace Optitrack
         {
             ResultType resultAttach = trackerTool->AttachTrackable();
 
-            if( (resultAttach == SUCCESS))
+            if( (resultAttach == ResultType_SUCCESS))
             {
                 this->m_LoadedTools.push_back(trackerTool);
 				fprintf(stdout, "<INFO> - [OptitrackTracker::AddTrackerTool]: Tool %s Added to the InternalContainer\n", trackerTool->GetToolName().c_str());
@@ -384,7 +384,7 @@ namespace Optitrack
         {
 			ResultType resultDettach = trackerTool->DettachTrackable();
 
-            if( (resultDettach == SUCCESS) )
+            if( (resultDettach == ResultType_SUCCESS) )
             {
                 int id = trackerTool->GetOptitrackID();
                 m_LoadedTools.erase(m_LoadedTools.begin() + id);
