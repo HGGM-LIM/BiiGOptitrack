@@ -13,7 +13,7 @@ typedef itk::MutexLockHolder<itk::FastMutexLock> MutexLockHolder;
 /**
 * \brief Different options for the result of the functions
 */
-typedef ResultType uint
+#define ResultType int
 #define FAILURE 0
 #define SUCCESS 1
 
