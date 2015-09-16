@@ -13,14 +13,11 @@ typedef itk::MutexLockHolder<itk::FastMutexLock> MutexLockHolder;
 /**
 * \brief Different options for the result of the functions
 */
-namespace ResultType
+class enum
 {
-    typedef enum
-    {
-        FAILURE = 0,
-        SUCCESS = 1
-    } ResultType;
-}
+    FAILURE = 0,
+    SUCCESS = 1
+} ResultType;
 
 
 
