@@ -33,6 +33,25 @@
 namespace Optitrack
 {
 
+#ifdef _WIN32
+#include <windows.h>
+
+    void sleep(unsigned milliseconds)
+    {
+        Sleep(milliseconds);
+    }
+#else
+#include <unistd.h>
+
+    void sleep(unsigned milliseconds)
+    {
+        usleep(milliseconds * 1000); // takes microseconds
+    }
+#endif
+
+
+
+
     void OptitrackTracker::SetState(OptitrackTracker::OPTITRACK_TRACKER_STATE state_)
     {
         MutexLockHolder lock(*m_StateMutex);
@@ -109,10 +128,10 @@ namespace Optitrack
     }
 
 	/*! \brief Initialization of the system.
-	* 
+	*
 	* This function allows the system to be initialize by moving the rigid body to Communication Established state.
 	* a normal member taking two arguments and returning an integer value.
-	* 
+	*
 	* @return Result of the system initialization: SUCCESS or FAILURE.
 	*/
 	ResultType OptitrackTracker::Open( void )
@@ -136,7 +155,7 @@ namespace Optitrack
 			{
 				this->SetState(STATE_TRACKER_CommunicationEstablished);
 				fprintf(stdout, "<INFO> - [OptitrackTracker::InternalOpen]: System was Initialized\n");
-				Sleep(30);
+				sleep(30);
 				return SUCCESS;
 			}
 			else
@@ -194,7 +213,7 @@ namespace Optitrack
             {
                 fprintf(stdout, "<INFO> - [OptitrackTracker::LoadCalibration]: Calibration was successfully loaded\n");
                 this->SetState(STATE_TRACKER_CalibratedState);
-				Sleep(30);
+				sleep(30);
                 return SUCCESS;
             }
 
@@ -203,9 +222,9 @@ namespace Optitrack
 
 	/*! \brief Shutdown of the system.
 	*
-	* This function closes the system. First, it stops the tracking Then, the system is shutdown. Finally, the function shuts 
+	* This function closes the system. First, it stops the tracking Then, the system is shutdown. Finally, the function shuts
 	* down the camera device driver and ensures all the driver threads are terminated properly.
-	* 
+	*
 	* @return Result of the system shutdown: SUCCESS or FAILURE.
 	*/
     ResultType OptitrackTracker::Close( void )
@@ -236,7 +255,7 @@ namespace Optitrack
 				{
 					this->m_LoadedTools.clear();
 					fprintf(stdout, "<INFO> - [OptitrackTracker::InternalClose]: System has been Shutdown Correctly\n");
-					Sleep(2000);
+					sleep(2000);
 					this->SetState(STATE_TRACKER_Idle);
 
 					NPRESULT resultFinalCleanup = TT_FinalCleanup();
@@ -483,7 +502,7 @@ namespace Optitrack
 					this->m_StopTrackingMutex->Lock();
 					localStopTracking = this->m_StopTracking;
 					this->m_StopTrackingMutex->Unlock();
-					Sleep(2);
+					sleep(2);
 				}
 				else{
 					//fprintf(stdout, "#ERROR# - [OptitrackTracker::TrackTools]: Update Failed");
@@ -708,12 +727,6 @@ namespace Optitrack
         return NULL;
     }
 
-	void sleep(unsigned int mseconds)
-	{
-		clock_t goal = mseconds + clock();
-		while (goal > clock());
-	}
-
 	ResultType OptitrackTracker::CheckNumberOfMarkers(void)
 	{
 		// Check number of Cameras
@@ -729,7 +742,7 @@ namespace Optitrack
 
 		while (iterations < maxIterationNumber)
 		{
-			Sleep(5);
+			sleep(5);
 			resultUpdate = TT_UpdateSingleFrame();
 
 			for (int cameraIndex = 0; cameraIndex < numberOfCameras; cameraIndex++)
@@ -1084,7 +1097,7 @@ namespace Optitrack
 
         for (int i = 0; i < 3; i++){
             result = this->StartTracking();
-            Sleep(100);
+            sleep(100);
             result = this->StopTracking();
             system("PAUSE");
         }
@@ -1121,7 +1134,7 @@ namespace Optitrack
 			vnl_matrix<double> T;
 			for (unsigned int q = 0; q < 3 * sampleNumber; q = q + 3)
 			{
-				Sleep(500);
+				sleep(500);
 				//fprintf(stdout, "Sample %d", (q / 3) + 1);
 				//Sleep(1000);
 
