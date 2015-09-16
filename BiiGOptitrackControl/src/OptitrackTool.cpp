@@ -491,12 +491,12 @@ namespace Optitrack
         }
         else
         {
-            fprintf(stdout, "<INFO> - [OptitrackTool::DeleteTrackable]: %s Deleted \n",this->GetToolName());
+            fprintf(stdout, "<INFO> - [OptitrackTool::DeleteTrackable]: %s Deleted \n",this->GetToolName().c_str());
             this->SetState(STATE_TOOL_Configurated);
             return SUCCESS;
         }
 
-        fprintf(stdout, "#ERROR# - [OptitrackTool::DeleteTrackable]: Cannot Remove Trackable %s \n",this->GetToolName());
+        fprintf(stdout, "#ERROR# - [OptitrackTool::DeleteTrackable]: Cannot Remove Trackable %s \n",this->GetToolName().c_str());
         this->SetState(previous_state);
         return FAILURE;
     }
@@ -659,7 +659,7 @@ namespace Optitrack
         }
         else
         {
-            fprintf(stdout, "#ERROR# - [OptitrackTool::AttachTrackable]: Tool %s is not Configurated \n",this->GetToolName());
+            fprintf(stdout, "#ERROR# - [OptitrackTool::AttachTrackable]: Tool %s is not Configurated \n",this->GetToolName().c_str());
             this->SetState(previous_state);
             return FAILURE;
         }
@@ -702,7 +702,7 @@ namespace Optitrack
 
         if( previous_state != STATE_TOOL_Attached)
         {
-            fprintf(stdout, "#ERROR# - [OptitrackTool::UpdateTool]: Tool %s is not in Attached State \n",this->GetToolName());
+            fprintf(stdout, "#ERROR# - [OptitrackTool::UpdateTool]: Tool %s is not in Attached State \n",this->GetToolName().c_str());
             this->SetState(previous_state);
             this->SetDataValid(false);
             return FAILURE;
@@ -793,7 +793,7 @@ namespace Optitrack
         {
             this->SetDataValid(false);
 			this->SetState(previous_state);
-        fprintf(stdout, "<INFO> - [OptitrackTool::UpdateTool]: Trackable %s NOT tracked\n", this->GetToolName());
+        fprintf(stdout, "<INFO> - [OptitrackTool::UpdateTool]: Trackable %s NOT tracked\n", this->GetToolName().c_str());
         }
 
          //fprintf(stdout, "<INFO> - [OptitrackTool::UpdateTool]: Failed API Updating\n");
