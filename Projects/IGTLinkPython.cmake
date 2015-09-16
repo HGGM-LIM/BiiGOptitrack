@@ -44,6 +44,6 @@ ExternalProject_Add(${EP_NAME}
   # build
   BUILD_COMMAND ""
   # install
-  INSTALL_DIR ${DESTDIR}
+  INSTALL_DIR ${${PROJECT_NAME}_INSTALL_DIR}
   # test
   )
