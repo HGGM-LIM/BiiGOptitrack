@@ -19,6 +19,7 @@
 #include <limits.h>
 #include <math.h>
 #include <time.h>
+#include <string>
 
 // NPTrackingTools library
 #include <NPTrackingTools.h>
@@ -49,6 +50,12 @@ namespace Optitrack
     }
 #endif
 
+    template < typename T > std::string to_string(const T& n)
+    {
+        std::ostringstream stm;
+        stm << n;
+        return stm.str();
+    }
 
 
 
@@ -839,7 +846,7 @@ namespace Optitrack
 		int TrackingToolsCamera1 = CameraCorrespondeceBetweenAPIandTrackingTools(numberOfCameras, Camera1 + 1);
 		int TrackingToolsCamera2 = CameraCorrespondeceBetweenAPIandTrackingTools(numberOfCameras, Camera2 + 1);
 
-		std::string camera_pair = "_" + std::to_string(TrackingToolsCamera1) + std::to_string(TrackingToolsCamera2);
+		std::string camera_pair = "_" + to_string(TrackingToolsCamera1) + to_string(TrackingToolsCamera2);
 
 		float FrameMarkerX, FrameMarkerY, FrameMarkerZ;
 		float X1, Y1, X2, Y2 = 0;
