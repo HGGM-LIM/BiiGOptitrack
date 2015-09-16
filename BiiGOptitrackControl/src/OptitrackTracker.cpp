@@ -978,16 +978,16 @@ namespace Optitrack
         char* char_Path = (char*)nameFile.c_str(); //Conversion from string to char*.
         tinyxml2::XMLError eResult = xmlDoc.LoadFile(char_Path);
         XMLCheckResult(eResult);
-        if (eResult != tinyxml2::XMLError::XML_SUCCESS){
+        if (eResult != tinyxml2::XML_SUCCESS){
 			fprintf(stdout, "[XML READING ERROR] Problem loading the file! %s\n", nameFile);
             return FAILURE;
 
         }
 
         tinyxml2::XMLElement * pRoot = xmlDoc.FirstChildElement("ConfigurationFile");
-        if (pRoot ==  0) eResult = tinyxml2::XMLError::XML_ERROR_FILE_READ_ERROR;
+        if (pRoot ==  0) eResult = tinyxml2::XML_ERROR_FILE_READ_ERROR;
         XMLCheckResult(eResult);
-        if (eResult != tinyxml2::XMLError::XML_SUCCESS){
+        if (eResult != tinyxml2::XML_SUCCESS){
             fprintf(stdout, "[XML READING ERROR] Problem accesing to NPTrackingTools element! \n");
             return FAILURE;
 
@@ -995,9 +995,9 @@ namespace Optitrack
 
         //CalibrationFile
         tinyxml2::XMLElement * pElement = pRoot->FirstChildElement("CalibrationFile");
-        if (pElement ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+        if (pElement ==  0) eResult = tinyxml2::XML_ERROR_PARSING_ELEMENT;
         XMLCheckResult(eResult);
-        if (eResult != tinyxml2::XMLError::XML_SUCCESS){
+        if (eResult != tinyxml2::XML_SUCCESS){
             fprintf(stdout, "[XML READING ERROR] Problem parsing the element CalibrationFile! \n");
             return FAILURE;
 
@@ -1015,8 +1015,8 @@ namespace Optitrack
 
         //CameraParameters
         pElement = pRoot->FirstChildElement("CameraParameters");
-        if (pElement ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
-        if (eResult == tinyxml2::XMLError::XML_SUCCESS){ //If CalibrationError element do not exist, attributes are not accessed.
+        if (pElement ==  0) eResult = tinyxml2::XML_ERROR_PARSING_ELEMENT;
+        if (eResult == tinyxml2::XML_SUCCESS){ //If CalibrationError element do not exist, attributes are not accessed.
             eResult = pElement->QueryFloatAttribute("Exposure", &camparamExposure);
             XMLCheckResult(eResult);
 
@@ -1030,9 +1030,9 @@ namespace Optitrack
 
         //ToolNumber
         pElement = pRoot->FirstChildElement("ToolNumber");
-        if (pElement ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+        if (pElement ==  0) eResult = tinyxml2::XML_ERROR_PARSING_ELEMENT;
         XMLCheckResult(eResult);
-        if (eResult != tinyxml2::XMLError::XML_SUCCESS){
+        if (eResult != tinyxml2::XML_SUCCESS){
             fprintf(stdout, "[XML READING ERROR] Problem parsing the element ToolMarkersNum! \n");
             return FAILURE;
 
@@ -1042,9 +1042,9 @@ namespace Optitrack
 
         //Tools
         pElement = pRoot->FirstChildElement("ToolsList");
-        if (pElement ==  0) eResult = tinyxml2::XMLError::XML_ERROR_PARSING_ELEMENT;
+        if (pElement ==  0) eResult = tinyxml2::XML_ERROR_PARSING_ELEMENT;
         XMLCheckResult(eResult);
-        if (eResult != tinyxml2::XMLError::XML_SUCCESS){
+        if (eResult != tinyxml2::XML_SUCCESS){
             fprintf(stdout, "[XML READING ERROR] Problem parsing the element Tools! \n");
             return FAILURE;
         }
