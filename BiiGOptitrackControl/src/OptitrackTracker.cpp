@@ -229,7 +229,7 @@ namespace Optitrack
 
 	/*! \brief Shutdown of the system.
 	*
-	* This function closes the system. First, it stops the tracking Then, the system is shutdown. Finally, the function shuts
+	* This function closes the system. First, it stops the tracking. Then, the system is shutdown. Finally, the function shuts
 	* down the camera device driver and ensures all the driver threads are terminated properly.
 	*
 	* @return Result of the system shutdown: SUCCESS or FAILURE.
@@ -693,6 +693,13 @@ namespace Optitrack
         return this->m_CameraNumber;
     }
 
+	/*! \brief Get an Optitrack tool by ID.
+	*
+	* This function provides an Optitrack tool pointer given an specific tool ID.
+	*
+	* @param toolID: identification number of the tool [unsigned int].
+	* @return Optitrack tool pointer.
+	*/
 	OptitrackTool::Pointer OptitrackTracker::GetOptitrackTool( unsigned int toolID)
     {
         //fprintf(stdout, "<INFO> - [OptitrackTracker::GetOptitrackTool]\n");
@@ -712,6 +719,13 @@ namespace Optitrack
         return t;
     }
 
+	/*! \brief Get an Optitrack tool by name.
+	*
+	* This function provides an Optitrack tool pointer given an specific tool name.
+	*
+	* @param toolID: name of the tool [string].
+	* @return Optitrack tool pointer.
+	*/
     OptitrackTool::Pointer OptitrackTracker::GetOptitrackToolByName( std::string toolName )
     {
         //fprintf(stdout, "<INFO> - [OptitrackTracker::GetOptitrackToolByName]\n");
@@ -734,6 +748,14 @@ namespace Optitrack
         return NULL;
     }
 
+	/*! \brief Check single optical marker in FOV.
+	*
+	* This function checks if every camera in the system is visualizing a single marker. If every camera is visualizing
+	* one marker it returns SUCCESS. Otherwise, it returns FAILURE, and cameras visualizing more than one marker are 
+	* identified. 
+	*
+	* @return Result of single marker visualization: SUCCESS or FAILURE.
+	*/
 	ResultType OptitrackTracker::CheckNumberOfMarkers(void)
 	{
 		// Check number of Cameras
@@ -767,7 +789,7 @@ namespace Optitrack
 		}
 
 		for (int cameraIndex = 0; cameraIndex < numberOfCameras; cameraIndex++){
-			if ((trackingFailureArray[cameraIndex] / 50) >= 0.3)
+			if ((trackingFailureArray[cameraIndex] / maxIterationNumber) >= 0.3)
 			{
 				// Camera pair is watching more than one marker
 				fprintf(stdout, "Camera %i is not visualizing just one marker.\n", cameraIndex);
@@ -779,6 +801,13 @@ namespace Optitrack
 		return ResultType_SUCCESS;
     }
 
+	/*! \brief Correspondance between API and TrackingTools software camera IDs.
+	*
+	* This function provides the TrackingTools software camera ID corresponding to a given API camera ID.
+	* @param  numberOfCameras: total number of cameras composing the system.
+	* @param  CameraNumber: API camera ID wanted to be converted.
+	* @return TrackingTools software camera ID.
+	*/
 	int CameraCorrespondeceBetweenAPIandTrackingTools(int numberOfCameras, int CameraNumber)
 	{
 		if (numberOfCameras == 8)
