@@ -57,9 +57,11 @@ namespace Optitrack
         return stm.str();
     }
 
-
-
-    void OptitrackTracker::SetState(OptitrackTracker::OPTITRACK_TRACKER_STATE state_)
+	/*! \brief Set tracker state.
+	*
+	* This function sets the tracker state.
+	*/
+	void OptitrackTracker::SetState(OptitrackTracker::OPTITRACK_TRACKER_STATE state_)
     {
         MutexLockHolder lock(*m_StateMutex);
         if (m_State == state_)
@@ -73,6 +75,12 @@ namespace Optitrack
         return;
     }
 
+	/*! \brief Get tracker state.
+	*
+	* This function gets the tracker state.
+	*
+	* @return Tracker state.
+	*/
     OptitrackTracker::OPTITRACK_TRACKER_STATE OptitrackTracker::GetState( void )
     {
         return this->m_State;
@@ -136,8 +144,7 @@ namespace Optitrack
 
 	/*! \brief Initialization of the system.
 	*
-	* This function allows the system to be initialize by moving the rigid body to Communication Established state.
-	* a normal member taking two arguments and returning an integer value.
+	* This function allows the system to be initialized.
 	*
 	* @return Result of the system initialization: SUCCESS or FAILURE.
 	*/
@@ -183,7 +190,7 @@ namespace Optitrack
 	/*! \brief Load the calibration file.
 	*
 	* This function allows the system to load the calibration file of the OptiTrack system. For a correct loading of the file
-	* the system must be initialized and the file must be optimum (.cal extension).
+	* the system must have been initialized and the file must be optimum (.cal extension).
 	*
 	* @return Result of calibration file loading: SUCCESS or FAILURE.
 	*/
@@ -294,7 +301,7 @@ namespace Optitrack
 
 	/*! \brief Reset of the system.
 	*
-	* This function resets the system. The tracking is stopped and all currently loaded rigid body definitions are removed. This resetting enables the 
+	* This function resets the system. The tracking is stopped and all currently loaded rigid body definitions are removed. This reset enables the 
 	* system to load a new calibration file.
 	*
 	* @return Result of the system reset: SUCCESS or FAILURE.
@@ -407,11 +414,11 @@ namespace Optitrack
         }
     }
 
-	/*! \brief Obtain number of tools attached to the system.
+	/*! \brief Obtaining the number of tools attached to the system.
 	*
 	* This function provides the number of tools which are attached to the system.
 	*
-	* @return Number of tools attached (unsigned int).
+	* @return Number of tools attached [unsigned int].
 	*/
     unsigned int OptitrackTracker::GetNumberOfAttachedTools( void )
     {
@@ -419,7 +426,7 @@ namespace Optitrack
         return this->m_LoadedTools.size();
     }
 
-	/*! \brief Start the tracking of tools.
+	/*! \brief Starting the tracking of tools.
 	*
 	* This function starts the tracking of all tools attached by launching a thread.
 	*
@@ -570,7 +577,7 @@ namespace Optitrack
         return 0;
     }
 
-	/*! \brief Stop the tracking of tools.
+	/*! \brief Stopping the tracking of tools.
 	*
 	* This function stops the tracking of tools.
 	*
@@ -606,7 +613,7 @@ namespace Optitrack
         }
     }
 
-	/*! \brief Setting of camera parameter.
+	/*! \brief Setting of camera parameters.
 	*
 	* This function allows to set some of the camera settings to the whole set of cameras, such as exposure, threshold, illumination, and video mode.
 	*
@@ -670,11 +677,11 @@ namespace Optitrack
         return ResultType_SUCCESS;
     }
 
-	/*! \brief Get the number of connected cameras.
+	/*! \brief Getting the number of connected cameras.
 	*
 	* This function provides the number of connected cameras.
 	*
-	* @return Number of connected cameras (unsigned int).
+	* @return Number of connected cameras [unsigned int].
 	*/
     unsigned int OptitrackTracker::GetCameraNumber( void )
     {
@@ -693,12 +700,12 @@ namespace Optitrack
         return this->m_CameraNumber;
     }
 
-	/*! \brief Get an Optitrack tool by ID.
+	/*! \brief Getting an OptiTrack tool by ID.
 	*
-	* This function provides an Optitrack tool pointer given an specific tool ID.
+	* This function provides an OptiTrack tool pointer given an specific tool ID.
 	*
 	* @param toolID: identification number of the tool [unsigned int].
-	* @return Optitrack tool pointer.
+	* @return OptiTrack tool pointer.
 	*/
 	OptitrackTool::Pointer OptitrackTracker::GetOptitrackTool( unsigned int toolID)
     {
@@ -719,12 +726,12 @@ namespace Optitrack
         return t;
     }
 
-	/*! \brief Get an Optitrack tool by name.
+	/*! \brief Getting an OptiTrack tool by name.
 	*
-	* This function provides an Optitrack tool pointer given an specific tool name.
+	* This function provides an OptiTrack tool pointer given an specific tool name.
 	*
 	* @param toolID: name of the tool [string].
-	* @return Optitrack tool pointer.
+	* @return OptiTrack tool pointer.
 	*/
     OptitrackTool::Pointer OptitrackTracker::GetOptitrackToolByName( std::string toolName )
     {
@@ -748,7 +755,7 @@ namespace Optitrack
         return NULL;
     }
 
-	/*! \brief Check single optical marker in FOV.
+	/*! \brief Checking single optical marker in FOV.
 	*
 	* This function checks if every camera in the system is visualizing a single marker. If every camera is visualizing
 	* one marker it returns SUCCESS. Otherwise, it returns FAILURE, and cameras visualizing more than one marker are 
@@ -806,7 +813,7 @@ namespace Optitrack
 	* This function provides the TrackingTools software camera ID corresponding to a given API camera ID.
 	* @param  numberOfCameras: total number of cameras composing the system.
 	* @param  CameraNumber: API camera ID wanted to be converted.
-	* @return TrackingTools software camera ID.
+	* @return TrackingTools software camera ID [int].
 	*/
 	int CameraCorrespondeceBetweenAPIandTrackingTools(int numberOfCameras, int CameraNumber)
 	{
@@ -854,6 +861,18 @@ namespace Optitrack
 		}
 	}
 
+	/*! \brief Getting 3D and 2D position of single marker using a pair of cameras.
+	*
+	* This function acquires 1000 samples of the 3D position of the markers using a pair of cameras. Also, it acquires
+	* 1000 samples of the 2D position of the markers in the plane of each camera within the pair. All data (cameras 
+	* involved, 2D positions, and 3D positions) is saved into a ".csv" file.
+	*
+	* @param  numberOfCameras: total number of cameras composing the system.
+	* @param  Camera1: API ID of the first camera belonging to the pair.
+	* @param  Camera2: API ID of the second camera belonging to the pair.
+	* @return Result of data updating [int]: 0 if success, 11 if TrackingTools license is invalid, and 14 if there is no
+	* available frame.
+	*/
 	int GetMarkerPosition2D3D(std::ostream* stream, int numberOfCameras, int Camera1, int Camera2)
 	{
 		NPRESULT resultUpdate;
@@ -911,6 +930,18 @@ namespace Optitrack
 		return resultUpdate;
 	}
 
+	/*! \brief Creating a data file to check calibration state of the system.
+	*
+	* This function acquires 1000 samples of the 3D position of the markers using all cameras in the system. Also, it 
+	* acquires 1000 samples of the 3D position and the 2D position of the markers using all possible combinations of 
+	* camera pairs . All data (cameras involved, 2D positions, and 3D positions) is saved into a ".csv" file. 
+	* Calibration state can be inferred placing a single and static reflective marker in the FOV of the cameras, and 
+	* comparing the 3D position of the marker acquired using the complete system and all differente camera pairs.
+	*
+	* @param  FileName: name of the ".csv" file to save tracking information.
+	* @return Result of data updating: 0 if success, 11 if TrackingTools license is invalid, and 14 if there is no
+	* available frame.
+	*/
 	ResultType OptitrackTracker::TestCalibration(std::string FileName)
 	{
 		fprintf(stdout, "<INFO> - [OptitrackTracker::TestCalibration]\n");
@@ -1013,6 +1044,14 @@ namespace Optitrack
 
 	}
 
+	/*! \brief Loading XML configuration file.
+	*
+	* This function loads the configuration file of the system containing: the calibration file path, the camera settings 
+	* (exposure, threshold, and intensity), and the list of used tools.
+	*
+	* @param  nameFile: path of the ".xml" configuration file.
+	* @return Result of the file loading: SUCESS (1) or FAILURE (0).
+	*/
     ResultType OptitrackTracker::LoadXMLConfigurationFile(std::string nameFile)
     {
         //== XML Configuration File reading
@@ -1141,6 +1180,14 @@ namespace Optitrack
         return ResultType_SUCCESS;
     }
 
+	/*! \brief Tool pivot calibration.
+	*
+	* This function acquires a number of samples of the pivoting procedure and computes the resultant pivot offset.
+	*
+	* @param optitrackID: OptiTrack identification number of the tool used for pivoting.
+	* @param sampleNumber: number of samples acquired during the pivoting.
+	* @return Pivot offset [vnl_vector_fixed].
+	*/
 	vnl_vector_fixed<double, 3> OptitrackTracker::Pivoting( unsigned int optitrackID, unsigned int sampleNumber)
 	{
 		fprintf(stdout, "<INFO> - [OptitrackHelper::Pivoting]\n");
@@ -1190,16 +1237,12 @@ namespace Optitrack
 						T_acquired[i + q][j] = T.get(i, j);
 					}
 				}
-
-
-
-
+				
 				for (unsigned int _c = 0; _c < 6; _c++)
 				{
 					cols[_c] = _c;
 				}
-
-
+				
 				vals[0] = T[0][0];
 				vals[1] = T[0][1];
 				vals[2] = T[0][2];
