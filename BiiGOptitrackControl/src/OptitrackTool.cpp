@@ -35,7 +35,11 @@ namespace Optitrack
         this->m_MyMutex->Unlock();
         this->m_StateMutex->Unlock();
     }
-
+	
+	/*! \brief Set OptiTrack tool state.
+	*
+	* This function sets a given state to the tool.
+	*/
     void OptitrackTool::SetState(OptitrackTool::OPTITRACK_TOOL_STATE state_)
     {
         MutexLockHolder lock(*m_StateMutex);
@@ -50,6 +54,12 @@ namespace Optitrack
         this->m_StateMutex->Unlock();
     }
 
+	/*! \brief Get OptiTrack tool state..
+	*
+	* This function gets the state of a tool.
+	*
+	* @return OptiTrack tool state.
+	*/
     OptitrackTool::OPTITRACK_TOOL_STATE OptitrackTool::GetState( void )
     {
         MutexLockHolder lock(*m_StateMutex);
@@ -57,6 +67,13 @@ namespace Optitrack
         this->m_StateMutex->Unlock();
     }
 
+	/*! \brief Tool configuration by .txt file.
+	*
+	* This function configures a tool from a given ".txt" file.
+	*
+	* @param nameFile: the .txt configuration file path.
+	* @return Result of the tool configuration.
+	*/
     ResultType OptitrackTool::ConfigureToolByTxtFile(std::string nameFile)
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::SetToolByTxtFile]\n");
@@ -222,6 +239,14 @@ namespace Optitrack
                     return ResultType_SUCCESS;
     }
 
+
+	/*! \brief Tool configuration by .xml file.
+	*
+	* This function configures a tool from a given ".xml" file.
+	*
+	* @param nameFile [: the .xml configuration file path.
+	* @return Result of the tool configuration [int].
+	*/
 	ResultType OptitrackTool::ConfigureToolByXmlFile(std::string nameFile)
 	{
 		//fprintf(stdout, "<INFO> - [OptitrackTool::SetToolByXmlFile]\n");
@@ -450,6 +475,7 @@ namespace Optitrack
 		return ResultType_SUCCESS;
 	}
 
+
     int OptitrackTool::GetIDnext( void )
     {
 
@@ -474,6 +500,13 @@ namespace Optitrack
 
     }
 
+
+	/*! \brief Trackable detachment.
+	*
+	* This function removes an individual rigid body from the list of tracked rigid bodies. 
+	*
+	* @return Result of the detachment [int].
+	*/
     ResultType OptitrackTool::DettachTrackable( void )
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::DeleteTrackable]\n");
@@ -501,6 +534,12 @@ namespace Optitrack
         return ResultType_FAILURE;
     }
 
+	/*! \brief Set tool position.
+	*
+	* This function sets a given position to the tool.
+	*
+	* @return Result of the position setting [int].
+	*/
     ResultType OptitrackTool::SetPosition(vnl_vector_fixed<double,3> position)
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::SetPosition]\n");
@@ -513,6 +552,12 @@ namespace Optitrack
         return ResultType_SUCCESS;
     }
 
+	/*! \brief Set tool transformation matrix.
+	*
+	* This function sets a given transformation matrix to the tool.
+	*
+	* @return Result of the transformation matrix setting [int].
+	*/
 	ResultType OptitrackTool::SetTransformMatrix(vnl_matrix<double> transform)
 	{
 		//fprintf(stdout, "<INFO> - [OptitrackTool::SetTransformMatrix]\n");
@@ -528,6 +573,12 @@ namespace Optitrack
 		return ResultType_SUCCESS;
 	}
 
+	/*! \brief Set tool orientation.
+	*
+	* This function sets a given orientation to the tool.
+	*
+	* @return Result of the orientation setting [int].
+	*/
     ResultType OptitrackTool::SetOrientation(vnl_quaternion<double> orientation)
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::SetOrientation]\n");
@@ -541,6 +592,12 @@ namespace Optitrack
         return ResultType_SUCCESS;
     }
 
+	/*! \brief Get tool position.
+	*
+	* This function gets the tool position.
+	*
+	* @return Tool position [vnl_vector_fixed<double,3>].
+	*/
     vnl_vector_fixed<double,3> OptitrackTool::GetPosition( void )
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::GetPosition]\n");
@@ -548,6 +605,12 @@ namespace Optitrack
         return this->m_Position;
     }
 
+	/*! \brief Get tool orientation.
+	*
+	* This function gets the tool orientation.
+	*
+	* @return Tool orientation [vnl_quaternion<double>].
+	*/
     vnl_quaternion<double> OptitrackTool::GetOrientation( void )
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::GetOrientation]\n");
@@ -555,6 +618,12 @@ namespace Optitrack
         return this->m_Orientation;
     }
 
+	/*! \brief Get tool transformation matrix.
+	*
+	* This function gets the tool transformation matrix.
+	*
+	* @return Tool transformation matrix [vnl_matrix<double>].
+	*/
 	vnl_matrix<double> OptitrackTool::GetTransformMatrix(void)
 	{
 		//fprintf(stdout, "<INFO> - [OptitrackTool::GetTransformMatrix]\n");
@@ -562,6 +631,12 @@ namespace Optitrack
 		return this->m_TransformMatrix;
 	}
 
+	/*! \brief Trackable attachment.
+	*
+	* This function adds an individual rigid body from the list of tracked rigid bodies.
+	*
+	* @return Result of the attachment [int].
+	*/
     ResultType OptitrackTool::AttachTrackable( void )
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::AttachTrackable]\n");
@@ -665,18 +740,33 @@ namespace Optitrack
         }
     }
 
+	/*! \brief Check if a tool is being tracked.
+	*
+	* This function returns information about whether the selected rigid body is found in the current frame.
+	*
+	* @return  Result of tracking assessment [bool]: True if the selected rigid body is found in the current frame.	*/
     bool OptitrackTool::IsTracked( void )
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::IsTracked]\n");
         return TT_IsTrackableTracked(this->GetOptitrackID());
     }
 
+	/*! \brief Check if tool data is valid.
+	*
+	* This function checks if tool data is valid.
+	*
+	* @return  Result of data assessment [bool]: True if data is valid.	*/
     bool OptitrackTool::IsDataValid( void ) const
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::IsDataValid]\n");
         return this->m_DataValid;
     }
 
+	/*! \brief Set data validity.
+	*
+	* This function sets tool data validity.
+	*
+	* @param  validate [bool]: boolean indicating data validity to be set.	*/
     void OptitrackTool::SetDataValid(bool validate)
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::SetDataValid]\n");
@@ -684,16 +774,32 @@ namespace Optitrack
         this->m_DataValid = validate;
     }
 
+	/*! \brief Check indetermination.
+	*
+	* This function checks if a given float number is an indeterminate value.
+	*
+	* @return  Result of indetermination assessment [bool].	*/
     bool OptitrackTool::IsIndeterminateValue(const float pV)
     {
         return (pV != pV);
     }
 
+	/*! \brief Check infinite value.
+	*
+	* This function checks if a given float number is an infinite value.
+	*
+	* @return  Result of infinite value assessment [bool].	*/
     bool OptitrackTool::IsInfiniteValue(const float pV)
     {
         return (fabs(pV) == std::numeric_limits<float>::infinity());
     }
 
+
+	/*! \brief Update tool.
+	*
+	* This function updates the tool: getting the position, orientation, and setting the transformation matrix.
+	*
+	* @return  Result of the data update [int].	*/
     ResultType OptitrackTool::UpdateTool( void )
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::UpdateTool]\n");
@@ -802,6 +908,12 @@ namespace Optitrack
          return ResultType_FAILURE;
     }
 
+	/*! \brief Creates tool transformation matrix.
+	*
+	* This function creates the tool transformation matrix from position and orientation data.
+	*
+	* @param R [vnl_matrix<double>]: transformation matrix.	* @param position [vnl_vector_fixed<double, 3>]: position of the tool.	* @param orientation [vnl_quaternion<double>]: orientation of the tool.
+	*/
 	void OptitrackTool::ConvertMatrix(vnl_matrix<double> &R, vnl_vector_fixed<double, 3> position, vnl_quaternion<double> orientation)
 	{
 		//fprintf(stdout, "<INFO> - [OptitrackTool::ConvertMatrix]\n");
