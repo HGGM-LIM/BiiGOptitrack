@@ -676,58 +676,34 @@ namespace Optitrack
                 }
             }
 
-            NPRESULT resultUpdate;
             NPRESULT resultTrackableTranslatePivot;
             for( int i=OPTITRACK_ATTEMPTS; i>0; i--)
             {
-                resultUpdate = TT_Update();
-                if(NPRESULT_SUCCESS == resultUpdate)
+                resultTrackableTranslatePivot = TT_TrackableTranslatePivot(this->m_OptitrackID,this->m_PivotPoint[0],this->m_PivotPoint[1],this->m_PivotPoint[2]);
+                if(NPRESULT_SUCCESS == resultCreateTrackable)
                 {
-                    resultTrackableTranslatePivot = TT_TrackableTranslatePivot(this->m_OptitrackID,this->m_PivotPoint[0],this->m_PivotPoint[1],this->m_PivotPoint[2]);
-                    if(NPRESULT_SUCCESS == resultCreateTrackable)
-                    {
-                        //fprintf(stdout, "<INFO> - [OptitrackTool::AttachTrackable]: Pivot Translation Successfull\n");
-                        this->SetState(STATE_TOOL_Attached);
-                        return ResultType_SUCCESS;
-                    }
-                    else
-                    {
-                        if(i == 1)
-                        {
-                            fprintf(stdout, "#ERROR# - [OptitrackTool::AttachTrackable]: Cannot do Pivot Translation\n");
-                            this->SetFileConfiguration("");
-                            this->SetNumberOfMarkers(0);
-                            delete this->m_CalibrationPoints;
-                            delete this->m_PivotPoint;
-                            this->m_OptitrackID = -1;
-                            this->SetState(previous_state);
-                            NPRESULT resultRemoveTrackable = TT_RemoveTrackable(this->GetOptitrackID());
-                            if(resultRemoveTrackable != NPRESULT_SUCCESS)
-                            {
-                                fprintf(stdout, "#FATAL ERROR# - [OptitrackTool::AttachTrackable]: Tool Was created but Pivot was not set correctly\n");
-                            }
-                            return ResultType_FAILURE;
-                        }
-                    }
+                    //fprintf(stdout, "<INFO> - [OptitrackTool::AttachTrackable]: Pivot Translation Successfull\n");
+                    this->SetState(STATE_TOOL_Attached);
+                    return ResultType_SUCCESS;
                 }
                 else
                 {
                     if(i == 1)
+                    {
+                        fprintf(stdout, "#ERROR# - [OptitrackTool::AttachTrackable]: Cannot do Pivot Translation\n");
+                        this->SetFileConfiguration("");
+                        this->SetNumberOfMarkers(0);
+                        delete this->m_CalibrationPoints;
+                        delete this->m_PivotPoint;
+                        this->m_OptitrackID = -1;
+                        this->SetState(previous_state);
+                        NPRESULT resultRemoveTrackable = TT_RemoveTrackable(this->GetOptitrackID());
+                        if(resultRemoveTrackable != NPRESULT_SUCCESS)
                         {
-                            fprintf(stdout, "#ERROR# - [OptitrackTool::AttachTrackable]: Cannot do Pivot Translation\n");
-                            this->SetFileConfiguration("");
-                            this->SetNumberOfMarkers(0);
-                            delete this->m_CalibrationPoints;
-                            delete this->m_PivotPoint;
-                            this->m_OptitrackID = -1;
-                            this->SetState(previous_state);
-                            NPRESULT resultRemoveTrackable = TT_RemoveTrackable(this->GetOptitrackID());
-                            if(resultRemoveTrackable != NPRESULT_SUCCESS)
-                            {
-                                fprintf(stdout, "#FATAL ERROR# - [OptitrackTool::AttachTrackable]: Tool Was created but Pivot was not set correctly\n");
-                            }
-                            return ResultType_FAILURE;
+                            fprintf(stdout, "#FATAL ERROR# - [OptitrackTool::AttachTrackable]: Tool Was created but Pivot was not set correctly\n");
                         }
+                        return ResultType_FAILURE;
+                    }
                 }
             }
 
@@ -744,7 +720,8 @@ namespace Optitrack
 	*
 	* This function returns information about whether the selected rigid body is found in the current frame.
 	*
-	* @return  Result of tracking assessment [bool]: True if the selected rigid body is found in the current frame.	*/
+	* @return  Result of tracking assessment [bool]: True if the selected rigid body is found in the current frame.
+	*/
     bool OptitrackTool::IsTracked( void )
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::IsTracked]\n");
@@ -755,7 +732,8 @@ namespace Optitrack
 	*
 	* This function checks if tool data is valid.
 	*
-	* @return  Result of data assessment [bool]: True if data is valid.	*/
+	* @return  Result of data assessment [bool]: True if data is valid.
+	*/
     bool OptitrackTool::IsDataValid( void ) const
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::IsDataValid]\n");
@@ -766,7 +744,8 @@ namespace Optitrack
 	*
 	* This function sets tool data validity.
 	*
-	* @param  validate [bool]: boolean indicating data validity to be set.	*/
+	* @param  validate [bool]: boolean indicating data validity to be set.
+	*/
     void OptitrackTool::SetDataValid(bool validate)
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::SetDataValid]\n");
@@ -778,7 +757,8 @@ namespace Optitrack
 	*
 	* This function checks if a given float number is an indeterminate value.
 	*
-	* @return  Result of indetermination assessment [bool].	*/
+	* @return  Result of indetermination assessment [bool].
+	*/
     bool OptitrackTool::IsIndeterminateValue(const float pV)
     {
         return (pV != pV);
@@ -788,7 +768,8 @@ namespace Optitrack
 	*
 	* This function checks if a given float number is an infinite value.
 	*
-	* @return  Result of infinite value assessment [bool].	*/
+	* @return  Result of infinite value assessment [bool].
+	*/
     bool OptitrackTool::IsInfiniteValue(const float pV)
     {
         return (fabs(pV) == std::numeric_limits<float>::infinity());
@@ -799,7 +780,8 @@ namespace Optitrack
 	*
 	* This function updates the tool: getting the position, orientation, and setting the transformation matrix.
 	*
-	* @return  Result of the data update [int].	*/
+	* @return  Result of the data update [int].
+	*/
     ResultType OptitrackTool::UpdateTool( void )
     {
         //fprintf(stdout, "<INFO> - [OptitrackTool::UpdateTool]\n");
@@ -912,7 +894,9 @@ namespace Optitrack
 	*
 	* This function creates the tool transformation matrix from position and orientation data.
 	*
-	* @param R [vnl_matrix<double>]: transformation matrix.	* @param position [vnl_vector_fixed<double, 3>]: position of the tool.	* @param orientation [vnl_quaternion<double>]: orientation of the tool.
+	* @param R [vnl_matrix<double>]: transformation matrix.
+	* @param position [vnl_vector_fixed<double, 3>]: position of the tool.
+	* @param orientation [vnl_quaternion<double>]: orientation of the tool.
 	*/
 	void OptitrackTool::ConvertMatrix(vnl_matrix<double> &R, vnl_vector_fixed<double, 3> position, vnl_quaternion<double> orientation)
 	{
