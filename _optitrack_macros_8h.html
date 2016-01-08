@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>BiiGOptitrackControl: Main Page</title>
+<title>BiiGOptitrackControl: inc/OptitrackMacros.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,10 +37,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -59,7 +59,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-</div><!-- top -->
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
+    </ul>
+  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -74,15 +79,62 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_fbd998c417a1c749e84684921ada9426.html">inc</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">BiiGOptitrackControl Documentation</div>  </div>
+<div class="title">OptitrackMacros.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><a href="_optitrack_macros_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a3bef108589cae0fc5003e00c9e4d4919"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_optitrack_macros_8h.html#a3bef108589cae0fc5003e00c9e4d4919">BiiGOptitrackControlClassMacro</a>(className, SuperClassName)</td></tr>
+<tr class="separator:a3bef108589cae0fc5003e00c9e4d4919"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a3bef108589cae0fc5003e00c9e4d4919"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BiiGOptitrackControlClassMacro</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">className, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">SuperClassName&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">typedef</span> className        Self; \</div>
+<div class="line">typedef SuperClassName      Superclass; \</div>
+<div class="line">typedef itk::SmartPointer&lt;Self&gt; Pointer; \</div>
+<div class="line">typedef itk::SmartPointer&lt;const Self&gt;  ConstPointer; \</div>
+<div class="line">itkTypeMacro(className,SuperClassName)</div>
+</div><!-- fragment -->
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 7 2016 16:22:18 for BiiGOptitrackControl by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 7 2016 16:22:17 for BiiGOptitrackControl by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
