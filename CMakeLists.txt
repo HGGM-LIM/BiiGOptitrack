@@ -7,6 +7,9 @@
 # Minimum version of CMake required ##
 ######################################
 cmake_minimum_required(VERSION 3.0.2)
+if(POLICY CMP0054)
+  cmake_policy(SET CMP0054 NEW)
+endif()
 
 #############################
 # Creation of the project  ##
@@ -15,7 +18,7 @@ set(MYPROJECT_NAME "BiiGOptitrack" CACHE STRING "")
 project(${MYPROJECT_NAME})
 
 # Version Control of the project
-set (${MYPROJECT_NAME}_VERSION_MAJOR 0)
+set (${MYPROJECT_NAME}_VERSION_MAJOR 2)
 set (${MYPROJECT_NAME}_VERSION_MINOR 0)
 message("Version: ${${MYPROJECT_NAME}_VERSION_MAJOR}.${${MYPROJECT_NAME}_VERSION_MINOR}")
 
@@ -27,7 +30,7 @@ set(${PROJECT_NAME}_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/install" CACHE PATH
 # Create an option of the project for documentation option set
 option(${PROJECT_NAME}_BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" OFF)
 option(${PROJECT_NAME}_CMAKE_DEBUG_FLAG "Create and install the HTML based API documentation (requires Doxygen)" ON)
-option(${PROJECT_NAME}_USE_FAKE_NPAPI "Fake Library NPTrackingTools" ON)
+option(${PROJECT_NAME}_USE_FAKE_NPAPI "Fake Library NPTrackingTools" OFF)
 set(${PROJECT_NAME}_ITK_EXTERNAL_DIR "NOTFOUND" CACHE PATH "ITK DIR")
 set(${PROJECT_NAME}_OpenIGTLink_EXTERNAL_DIR "NOTFOUND" CACHE PATH "OpenIGTLink DIR")
 set(${PROJECT_NAME}_tinyxml2_EXTERNAL_DIR "NOTFOUND" CACHE PATH "timyxml2 DIR")
@@ -53,7 +56,31 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND APPLE)
   set(CMAKE_CXX_FLAGS "-stdlib=libstdc++ ${CMAKE_CXX_FLAGS}")
 endif()
 
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+  set(CMAKE_CONFIGURATION_TYPES "Release;RelWithDebInfo" CACHE STRING "" FORCE)
+endif()
+
 cma_configure_projects()
+
+if(${PROJECT_NAME}_BUILD_PACKAGING)
+  set(CPACK_GENERATOR "ZIP")
+  set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
+  set(CPACK_PACKAGE_VENDOR "E. Marinetto")
+  set(CPACK_PACKAGE_VERSION_MAJOR ${${PROJECT_NAME}_VERSION_MAJOR})
+  set(CPACK_PACKAGE_VERSION_MINOR ${${PROJECT_NAME}_VERSION_MINOR})
+  set(CPACK_PACKAGE_VERSION_PATCH ${${PROJECT_NAME}_VERSION_PATCH})
+  set(CPACK_PACKAGE_VERSION ${${PROJECT_NAME}_VERSION})
+endif()
+
+# Documentation
+if(${PROJECT_NAME}_BUILD_DOCUMENTATION AND NOT USE_Doxygen)
+  message("${PROJECT_NAME}_BUILD_DOCUMENTATION is enabling Doxygen")
+  set(USE_Doxygen ON CACHE BOOL "" FORCE)
+endif()
 
 
 # configure files
@@ -73,5 +100,14 @@ foreach (KEY ${VARIABLES})
   endif()
 endforeach()
 file(APPEND ${PROJECT_BINARY_DIR}/CMake.h "\n#endif  // __CMake_h\n")
+
+
+# configure launcher
+cma_configure_launcher("${PROJECT_SOURCE_DIR}/CMake/Launcher.cmake")
+
+cma_launcher_target(Terminal
+  NAME run_Terminal)
+cma_launcher_shortcut(Terminal
+  NAME Terminal)
 
 

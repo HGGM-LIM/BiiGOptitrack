@@ -14,7 +14,7 @@ set(EP_OPTION_NAME "USE_${EP_NAME}")
 set(EP_REQUIRED_PROJECTS Git)
 set(EP_URL "https://github.com/leethomason/tinyxml2.git")
 set(EP_OPTION_DESCRIPTION "${EP_NAME} Project")
-set(EP_OPTION_DEFAULT ON)
+set(EP_OPTION_DEFAULT OFF)
 
 cma_list(APPEND EP_REQUIRED_PROJECTS Doxygen IF ${PROJECT_NAME}_BUILD_DOCUMENTATION)
 
