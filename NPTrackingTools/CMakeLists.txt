@@ -79,8 +79,7 @@ endif()
 ###########################################
 configure_file (
   "${PROJECT_SOURCE_DIR}/CMake/Config.h.in"
-  "${PROJECT_BINARY_DIR}/CmakeFilesHeader/NPTrackingToolsConfig.h"
-  FORCE)
+  "${PROJECT_BINARY_DIR}/CmakeFilesHeader/NPTrackingToolsConfig.h")
 if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
     message("    Creating configuration file Config.h in ${PROJECT_BINARY_DIR}/CmakeFilesHeader/NPTrackingToolsConfig.h")
 endif()
@@ -195,6 +194,8 @@ if(${PROJECT_NAME}_USE_FAKE_NPAPI)
     set(CONF_LIBRARY_DIRS "${${PROJECT_NAME}_INSTALL_DIR}/lib" "${${PROJECT_NAME}_INSTALL_DIR}/bin")
     # Binary folder
     set(CONF_BINARY_DIR "${PROJECT_BINARY_DIR}")
+    # Build folder
+    set(CONF_BUILD_DIR "${PROJECT_BINARY_DIR}")
     # Install folder
     set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
     # Flag for libraries
@@ -252,6 +253,8 @@ if(${PROJECT_NAME}_USE_FAKE_NPAPI)
     set(CONF_LIBRARY_DIRS "${${PROJECT_NAME}_INSTALL_DIR}/lib" "${${PROJECT_NAME}_INSTALL_DIR}/bin")
     # Binary folder
     set(CONF_BINARY_DIR "${PROJECT_BINARY_DIR}")
+    # Build folder
+    set(CONF_BUILD_DIR "${PROJECT_BINARY_DIR}")
     # Install folder
     set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
     # Flag for libraries
@@ -365,7 +368,9 @@ else()
         # Library Folders
         set(CONF_LIBRARY_DIRS ${TrackingToolsAPI_LIB_DIR})
         # Binary folder
-        set(CONF_BINARY_DIR ${PROJECT_BINARY_DIR})
+        set(CONF_BINARY_DIR "${PROJECT_BINARY_DIR}")
+        # Build folder
+        set(CONF_BUILD_DIR "${PROJECT_BINARY_DIR}")
         # Install folder
         set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
         # Flag for libraries
@@ -428,6 +433,8 @@ else()
         set(CONF_LIBRARY_DIRS "${${PROJECT_NAME}_INSTALL_DIR}/lib" "${${PROJECT_NAME}_INSTALL_DIR}/bin")
         # Binary folder
         set(CONF_BINARY_DIR ${${PROJECT_NAME}_INSTALL_DIR}/bin)
+        # Build folder
+        set(CONF_BUILD_DIR "${PROJECT_BINARY_DIR}")
         # Install folder
         set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
         # Flag for libraries

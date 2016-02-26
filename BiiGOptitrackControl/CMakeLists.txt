@@ -206,6 +206,8 @@ set(CONF_LIBRARY ${PROJECT_NAME})
 set(CONF_LIBRARY_DIRS "${${PROJECT_NAME}_INSTALL_DIR}/lib" "${${PROJECT_NAME}_INSTALL_DIR}/bin")
 # Binary folder
 set(CONF_BINARY_DIR "${PROJECT_BINARY_DIR}")
+# Build folder
+set(CONF_BUILD_DIR "${PROJECT_BINARY_DIR}")
 # Install folder
 set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
 # Flag for libraries
@@ -214,7 +216,6 @@ set(CONF_SHARED ON)
 set(CONF_DEFINITIONS
     -DCMAKE_DEBUG_FLAG:BOOL=${${PROJECT_NAME}_CMAKE_DEBUG_FLAG})
 # Executables names
-set(CONF_EXECUTABLES "")
 set(CONF_EXECUTABLES_DIRS "")
 
 if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
@@ -250,7 +251,6 @@ install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}-targets
 
 export(TARGETS ${PROJECT_NAME} FILE "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake")
 export(PACKAGE ${PROJECT_NAME})
-
 ##############################################
 # Configure Config.cmake for install folder ##
 ##############################################
@@ -264,6 +264,8 @@ set(CONF_LIBRARY ${PROJECT_NAME})
 set(CONF_LIBRARY_DIRS "${${PROJECT_NAME}_INSTALL_DIR}/lib" "${${PROJECT_NAME}_INSTALL_DIR}/bin")
 # Binary folder
 set(CONF_BINARY_DIR "${${PROJECT_NAME}_INSTALL_DIR}/bin")
+# Build folder
+set(CONF_BUILD_DIR "${PROJECT_BINARY_DIR}")
 # Install folder
 set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
 # Flag for libraries
