@@ -102,6 +102,35 @@ if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
     message("    Defining Install configuration into folder: ${${PROJECT_NAME}_INSTALL_DIR}")
 endif()
 
+##############################################
+# Configure Config.cmake for install folder ##
+##############################################
+# Include folders
+set(CONF_INCLUDE_DIRS "${PROJECT_BINARY_DIR}/install/inc")
+# Include files
+file(GLOB CONF_INCLUDE_FILES ${CONF_INCLUDE_DIRS}/*.h)
+# Source folders
+set(CONF_SOURCE_DIRS ${PROJECT_SOURCE_DIR})
+# Library names
+set(CONF_LIBRARY "")
+# Library Folders
+set(CONF_LIBRARY_DIRS "${PROJECT_BINARY_DIR}/install/lib" "${PROJECT_BINARY_DIR}/install/bin")
+# Binary folder
+set(CONF_BINARY_DIR "${PROJECT_BINARY_DIR}")
+# Install folder
+set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
+# Flag for libraries
+set(CONF_SHARED OFF)
+# Definition of the project (options)
+set(CONF_DEFINITIONS
+    -DCMAKE_DEBUG_FLAG:BOOL=${${PROJECT_NAME}_CMAKE_DEBUG_FLAG})
+# Executables names
+set(CONF_EXECUTABLES "")
+set(CONF_EXECUTABLES_DIRS "${PROJECT_BINARY_DIR}/install/lib")
+
+if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
+    message("    Creating Config File ${PROJECT_NAME}Config.cmake into ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake")
+endif()
 # Create the file
 configure_file("${PROJECT_SOURCE_DIR}/CMake/Config.cmake.in" "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigInstall.cmake" @ONLY)
 configure_file("${PROJECT_SOURCE_DIR}/CMake/ConfigInstall.cmake.in" "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigInstallScript.cmake" @ONLY)
@@ -109,6 +138,7 @@ configure_file("${PROJECT_SOURCE_DIR}/CMake/FilesToBeCopiedDuringInstall.cmake.i
 # Copy the file to the install folder
 install (SCRIPT "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigInstallScript.cmake")
 install (SCRIPT "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigInstallFilesScript.cmake")
+
 
 if(${PROJECT_NAME}_BUILD_PACKAGING)
   set(CPACK_GENERATOR "ZIP")
