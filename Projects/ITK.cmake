@@ -3,7 +3,6 @@
 
 set(EP_OPTION_NAME "USE_${EP_NAME}")
 set(EP_REQUIRED_PROJECTS Git)
-set(EP_PATCH "${CMAKE_CURRENT_LIST_DIR}/Patches/${EP_NAME}.patch")
 set(EP_OPTION_DESCRIPTION "Insight Segmentation and Registration Toolkit")
 set(EP_URL "git://itk.org/ITK.git")
 set(EP_VERSION "v4.9.0")

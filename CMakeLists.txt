@@ -14,13 +14,13 @@ endif()
 #############################
 # Creation of the project  ##
 #############################
-set(MYPROJECT_NAME "BiiGOptitrack" CACHE STRING "")
-project(${MYPROJECT_NAME})
+set(PROJECT_NAME "BiiGOptitrack" CACHE STRING "")
+project(${PROJECT_NAME})
 
 # Version Control of the project
-set (${MYPROJECT_NAME}_VERSION_MAJOR 2)
-set (${MYPROJECT_NAME}_VERSION_MINOR 0)
-message("Version: ${${MYPROJECT_NAME}_VERSION_MAJOR}.${${MYPROJECT_NAME}_VERSION_MINOR}")
+set (${PROJECT_NAME}_VERSION_MAJOR 2)
+set (${PROJECT_NAME}_VERSION_MINOR 0)
+message("Version: ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}")
 
 
 ###############################
@@ -30,10 +30,15 @@ set(${PROJECT_NAME}_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/install" CACHE PATH
 # Create an option of the project for documentation option set
 option(${PROJECT_NAME}_BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" OFF)
 option(${PROJECT_NAME}_CMAKE_DEBUG_FLAG "Create and install the HTML based API documentation (requires Doxygen)" ON)
+# Create variable for packing 
+option(${PROJECT_NAME}_BUILD_PACKAGING "Support for CPack packaging" OFF)
+
+# BiiGOptitrack Options
 option(${PROJECT_NAME}_USE_FAKE_NPAPI "Fake Library NPTrackingTools" OFF)
-set(${PROJECT_NAME}_ITK_EXTERNAL_DIR "NOTFOUND" CACHE PATH "ITK DIR")
-set(${PROJECT_NAME}_OpenIGTLink_EXTERNAL_DIR "NOTFOUND" CACHE PATH "OpenIGTLink DIR")
-set(${PROJECT_NAME}_tinyxml2_EXTERNAL_DIR "NOTFOUND" CACHE PATH "timyxml2 DIR")
+set(${PROJECT_NAME}_ITK_EXTERNAL_DIR "NOT-FOUND" CACHE PATH "ITK DIR")
+set(${PROJECT_NAME}_OpenIGTLink_EXTERNAL_DIR "NOT-FOUND" CACHE PATH "OpenIGTLink DIR")
+set(${PROJECT_NAME}_tinyxml2_EXTERNAL_DIR "NOT-FOUND" CACHE PATH "timyxml2 DIR")
+
 
 ###############################
 # Look for CMakeAll          ##
@@ -56,15 +61,84 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND APPLE)
   set(CMAKE_CXX_FLAGS "-stdlib=libstdc++ ${CMAKE_CXX_FLAGS}")
 endif()
 
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-  set(CMAKE_CONFIGURATION_TYPES "Release;RelWithDebInfo" CACHE STRING "" FORCE)
+cma_configure_projects()
+
+###########################
+# Configure Config.cmake ##
+###########################
+# Include folders
+set(CONF_INCLUDE_DIRS "${PROJECT_BINARY_DIR}/install/inc")
+# Include files
+file(GLOB CONF_INCLUDE_FILES ${CONF_INCLUDE_DIRS}/*.h)
+# Source folders
+set(CONF_SOURCE_DIRS ${PROJECT_SOURCE_DIR})
+# Library names
+set(CONF_LIBRARY "")
+# Library Folders
+set(CONF_LIBRARY_DIRS "${PROJECT_BINARY_DIR}/install/lib" "${PROJECT_BINARY_DIR}/install/bin")
+# Binary folder
+set(CONF_BINARY_DIR "${PROJECT_BINARY_DIR}")
+# Install folder
+set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
+# Flag for libraries
+set(CONF_SHARED OFF)
+# Definition of the project (options)
+set(CONF_DEFINITIONS
+    -DCMAKE_DEBUG_FLAG:BOOL=${${PROJECT_NAME}_CMAKE_DEBUG_FLAG})
+# Executables names
+set(CONF_EXECUTABLES "")
+set(CONF_EXECUTABLES_DIRS "${PROJECT_BINARY_DIR}/install/lib")
+
+if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
+    message("    Creating Config File ${PROJECT_NAME}Config.cmake into ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake")
+endif()
+configure_file("${PROJECT_SOURCE_DIR}/CMake/Config.cmake.in" "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" @ONLY)
+
+###############################################
+# INSTALLATION TARGET and Configuration Files #
+###############################################
+set(CMAKE_INSTALL_PREFIX ${${PROJECT_NAME}_INSTALL_DIR})
+if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
+    message("    Defining Install configuration into folder: ${${PROJECT_NAME}_INSTALL_DIR}")
 endif()
 
-cma_configure_projects()
+##############################################
+# Configure Config.cmake for install folder ##
+##############################################
+# Include folders
+set(CONF_INCLUDE_DIRS "${PROJECT_BINARY_DIR}/install/inc")
+# Include files
+file(GLOB CONF_INCLUDE_FILES ${CONF_INCLUDE_DIRS}/*.h)
+# Source folders
+set(CONF_SOURCE_DIRS ${PROJECT_SOURCE_DIR})
+# Library names
+set(CONF_LIBRARY "")
+# Library Folders
+set(CONF_LIBRARY_DIRS "${PROJECT_BINARY_DIR}/install/lib" "${PROJECT_BINARY_DIR}/install/bin")
+# Binary folder
+set(CONF_BINARY_DIR "${PROJECT_BINARY_DIR}")
+# Install folder
+set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
+# Flag for libraries
+set(CONF_SHARED OFF)
+# Definition of the project (options)
+set(CONF_DEFINITIONS
+    -DCMAKE_DEBUG_FLAG:BOOL=${${PROJECT_NAME}_CMAKE_DEBUG_FLAG})
+# Executables names
+set(CONF_EXECUTABLES "")
+set(CONF_EXECUTABLES_DIRS "${PROJECT_BINARY_DIR}/install/lib")
+
+if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
+    message("    Creating Config File ${PROJECT_NAME}Config.cmake into ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake")
+endif()
+# Create the file
+configure_file("${PROJECT_SOURCE_DIR}/CMake/Config.cmake.in" "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigInstall.cmake" @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/CMake/ConfigInstall.cmake.in" "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigInstallScript.cmake" @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/CMake/FilesToBeCopiedDuringInstall.cmake.in" "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigInstallFilesScript.cmake" @ONLY)
+# Copy the file to the install folder
+install (SCRIPT "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigInstallScript.cmake")
+install (SCRIPT "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigInstallFilesScript.cmake")
+
 
 if(${PROJECT_NAME}_BUILD_PACKAGING)
   set(CPACK_GENERATOR "ZIP")
@@ -74,6 +148,7 @@ if(${PROJECT_NAME}_BUILD_PACKAGING)
   set(CPACK_PACKAGE_VERSION_MINOR ${${PROJECT_NAME}_VERSION_MINOR})
   set(CPACK_PACKAGE_VERSION_PATCH ${${PROJECT_NAME}_VERSION_PATCH})
   set(CPACK_PACKAGE_VERSION ${${PROJECT_NAME}_VERSION})
+  cma_package_projects()
 endif()
 
 # Documentation
@@ -109,5 +184,4 @@ cma_launcher_target(Terminal
   NAME run_Terminal)
 cma_launcher_shortcut(Terminal
   NAME Terminal)
-
 

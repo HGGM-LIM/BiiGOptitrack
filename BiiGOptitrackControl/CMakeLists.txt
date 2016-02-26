@@ -19,13 +19,13 @@ cmake_minimum_required (VERSION 3.0.2)
 #############################
 # Creation of the project  ##
 #############################
-set(MYPROJECT_NAME "BiiGOptitrackControl")
-project(${MYPROJECT_NAME})
+set(PROJECT_NAME "BiiGOptitrackControl")
+project(${PROJECT_NAME})
 
 # Version Control of the project
-set (${MYPROJECT_NAME}_VERSION_MAJOR 0)
-set (${MYPROJECT_NAME}_VERSION_MINOR 0)
-message("Version: ${${MYPROJECT_NAME}_VERSION_MAJOR}.${${MYPROJECT_NAME}_VERSION_MINOR}")
+set (${PROJECT_NAME}_VERSION_MAJOR 0)
+set (${PROJECT_NAME}_VERSION_MINOR 0)
+message("Version: ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}")
 
 
 ###############################
@@ -63,8 +63,8 @@ if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
     message("         PROJECT_NAME: ${PROJECT_NAME}")
     message("         PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
     message("         PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
-    message("         ${MYPROJECT_NAME}_SOURCE_DIR: ${${MYPROJECT_NAME}_SOURCE_DIR}")
-    message("         ${MYPROJECT_NAME}_BINARY_DIR: ${${MYPROJECT_NAME}_BINARY_DIR}")
+    message("         ${PROJECT_NAME}_SOURCE_DIR: ${${PROJECT_NAME}_SOURCE_DIR}")
+    message("         ${PROJECT_NAME}_BINARY_DIR: ${${PROJECT_NAME}_BINARY_DIR}")
 
     message("         CMAKE_PROJECT_NAME: ${CMAKE_PROJECT_NAME}")
     message("         CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
@@ -203,7 +203,7 @@ set(CONF_SOURCE_DIRS ${PROJECT_SOURCE_DIR})
 # Library names
 set(CONF_LIBRARY ${PROJECT_NAME})
 # Library Folders
-set(CONF_LIBRARY_DIRS "${PROJECT_BINARY_DIR}/install/lib" "${PROJECT_BINARY_DIR}/install/bin")
+set(CONF_LIBRARY_DIRS "${${PROJECT_NAME}_INSTALL_DIR}/lib" "${${PROJECT_NAME}_INSTALL_DIR}/bin")
 # Binary folder
 set(CONF_BINARY_DIR "${PROJECT_BINARY_DIR}")
 # Install folder
@@ -214,6 +214,7 @@ set(CONF_SHARED ON)
 set(CONF_DEFINITIONS
     -DCMAKE_DEBUG_FLAG:BOOL=${${PROJECT_NAME}_CMAKE_DEBUG_FLAG})
 # Executables names
+set(CONF_EXECUTABLES "")
 set(CONF_EXECUTABLES_DIRS "")
 
 if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
@@ -254,15 +255,15 @@ export(PACKAGE ${PROJECT_NAME})
 # Configure Config.cmake for install folder ##
 ##############################################
 # Include folders
-set(CONF_INCLUDE_DIRS "install/inc")
+set(CONF_INCLUDE_DIRS "${${PROJECT_NAME}_INSTALL_DIR}/inc")
 # Source folders
 set(CONF_SOURCE_DIRS "")
 # Library names
 set(CONF_LIBRARY ${PROJECT_NAME})
 # Library Folders
-set(CONF_LIBRARY_DIRS "install/lib" "/install/bin")
+set(CONF_LIBRARY_DIRS "${${PROJECT_NAME}_INSTALL_DIR}/lib" "${${PROJECT_NAME}_INSTALL_DIR}/bin")
 # Binary folder
-set(CONF_BINARY_DIR "install/bin")
+set(CONF_BINARY_DIR "${${PROJECT_NAME}_INSTALL_DIR}/bin")
 # Install folder
 set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
 # Flag for libraries
@@ -274,7 +275,7 @@ set(CONF_DEFINITIONS
 set(CONF_EXECUTABLES_DIRS "install/bin")
 
 if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
-    message("    Creating Config File ${PROJECT_NAME}Config.cmake into install/${PROJECT_NAME}Config.cmake")
+    message("    Creating Config File ${PROJECT_NAME}Config.cmake into ${${PROJECT_NAME}_INSTALL_DIR}/${PROJECT_NAME}Config.cmake")
 endif()
 # Create the file
 configure_file("${PROJECT_SOURCE_DIR}/CMake/Config.cmake.in" "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigInstall.cmake" @ONLY)

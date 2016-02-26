@@ -19,13 +19,13 @@ cmake_minimum_required (VERSION 3.0.2)
 #############################
 # Creation of the project  ##
 #############################
-set(MYPROJECT_NAME "CalibrationValidation")
-project(${MYPROJECT_NAME})
+set(PROJECT_NAME "CalibrationValidation")
+project(${PROJECT_NAME})
 
 # Version Control of the project
-set (${MYPROJECT_NAME}_VERSION_MAJOR 0)
-set (${MYPROJECT_NAME}_VERSION_MINOR 0)
-message("Version: ${${MYPROJECT_NAME}_VERSION_MAJOR}.${${MYPROJECT_NAME}_VERSION_MINOR}")
+set (${PROJECT_NAME}_VERSION_MAJOR 0)
+set (${PROJECT_NAME}_VERSION_MINOR 0)
+message("Version: ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}")
 
 ###############################
 # Options for Configuration  ##
@@ -50,8 +50,8 @@ if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
     message("         PROJECT_NAME: ${PROJECT_NAME}")
     message("         PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
     message("         PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
-    message("         ${MYPROJECT_NAME}_SOURCE_DIR: ${${MYPROJECT_NAME}_SOURCE_DIR}")
-    message("         ${MYPROJECT_NAME}_BINARY_DIR: ${${MYPROJECT_NAME}_BINARY_DIR}")
+    message("         ${PROJECT_NAME}_SOURCE_DIR: ${${PROJECT_NAME}_SOURCE_DIR}")
+    message("         ${PROJECT_NAME}_BINARY_DIR: ${${PROJECT_NAME}_BINARY_DIR}")
 
     message("         CMAKE_PROJECT_NAME: ${CMAKE_PROJECT_NAME}")
     message("         CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
