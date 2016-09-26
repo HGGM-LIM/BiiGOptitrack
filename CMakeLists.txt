@@ -31,7 +31,7 @@ set(${PROJECT_NAME}_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/install" CACHE PATH
 option(${PROJECT_NAME}_BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" OFF)
 option(${PROJECT_NAME}_CMAKE_DEBUG_FLAG "Create and install the HTML based API documentation (requires Doxygen)" ON)
 # Create variable for packing 
-option(${PROJECT_NAME}_BUILD_PACKAGING "Support for CPack packaging" OFF)
+option(${PROJECT_NAME}_BUILD_PACKAGING "Support for CPack packaging" ON)
 
 # BiiGOptitrack Options
 option(${PROJECT_NAME}_USE_FAKE_NPAPI "Fake Library NPTrackingTools" OFF)
