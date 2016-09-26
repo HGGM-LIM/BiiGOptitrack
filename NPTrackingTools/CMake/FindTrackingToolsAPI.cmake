@@ -16,9 +16,9 @@ if( NOT WIN32)
 else()
 
     # Find Tracking Tools installation
-    find_path(TrackingToolsAPI_DIR TrackingTools.exe
+    find_path(TrackingToolsAPI_DIR Motive.exe
           DOC  "Include directory of the Optitrack library."
-          HINT "C:/Program Files/OptiTrack/Tracking Tools"
+          HINT "C:/Program Files/OptiTrack/Motive"
           )
 
     if(TrackingToolsAPI_DIR)
@@ -31,6 +31,12 @@ else()
     find_path(TrackingToolsAPI_LIB_DIR NPTrackingToolsx64.dll
           DOC  "Dinamic Link Library of Tracking Tools API NPTrackingToolsx64.dll"
           HINT "${TrackingToolsAPI_DIR}/lib"
+          )
+
+    # Find Dll library
+    find_path(AMTIUSBDevice_LIB_DIR AMTIUSBDevice.dll
+          DOC  "Dinamic Link Library of Tracking Tools API AMTIUSBDevice.dll"
+          HINT "${TrackingToolsAPI_DIR}"
           )
 
     if(TrackingToolsAPI_LIB_DIR)
@@ -57,6 +63,8 @@ else()
     if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
       find_file(TrackingToolsAPI_DLL NPTrackingToolsx64.dll ${TrackingToolsAPI_LIB_DIR})
       find_file(TrackingToolsAPI_LIB_FILE NPTrackingToolsx64.lib ${TrackingToolsAPI_LIB_DIR})
+      find_file(AMTIUSBDevice_LIB_FILE AMTIUSBDevice.dll ${AMTIUSBDevice_LIB_DIR})
+      
       set(TrackingToolsAPI_LIB "NPTrackingToolsx64")
 
     else( CMAKE_SIZEOF_VOID_P EQUAL 8 )
@@ -74,7 +82,7 @@ else()
     endif()
 
     # Find Headers file
-    find_path(TrackingToolsAPI_EXE TrackingTools.exe
+    find_path(TrackingToolsAPI_EXE Motive.exe
           DOC  "TrackingTools application"
           HINT "${TrackingToolsAPI_DIR}"
           )
@@ -94,7 +102,8 @@ else()
      AND TrackingToolsAPI_INC
      AND TrackingToolsAPI_DLL
      AND TrackingToolsAPI_INC2
-     AND TrackingToolsAPI_EXE)
+     AND TrackingToolsAPI_EXE
+     AND AMTIUSBDevice_LIB_DIR)
 
     set(TrackingToolsAPI_FOUND "YES" FORCE)
     set(TrackingToolsAPI_INCLUDE_DIRS ${TrackingToolsAPI_INC_DIR} CACHE PATH "" FORCE)

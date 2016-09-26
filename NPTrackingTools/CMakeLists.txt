@@ -19,13 +19,13 @@ cmake_minimum_required (VERSION 3.0.2)
 #############################
 # Creation of the project  ##
 #############################
-set(PROJECT_NAME "NPTrackingTools")
-project(${PROJECT_NAME})
+set(MYPROJECT_NAME "NPTrackingTools")
+project(${MYPROJECT_NAME})
 
 # Version Control of the project
-set (${PROJECT_NAME}_VERSION_MAJOR 0)
-set (${PROJECT_NAME}_VERSION_MINOR 0)
-message("Version: ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}")
+set (${MYPROJECT_NAME}_VERSION_MAJOR 0)
+set (${MYPROJECT_NAME}_VERSION_MINOR 0)
+message("Version: ${${MYPROJECT_NAME}_VERSION_MAJOR}.${${MYPROJECT_NAME}_VERSION_MINOR}")
 
 
 ###############################
@@ -56,8 +56,8 @@ if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
     message("         PROJECT_NAME: ${PROJECT_NAME}")
     message("         PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
     message("         PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
-    message("         ${PROJECT_NAME}_SOURCE_DIR: ${${PROJECT_NAME}_SOURCE_DIR}")
-    message("         ${PROJECT_NAME}_BINARY_DIR: ${${PROJECT_NAME}_BINARY_DIR}")
+    message("         ${MYPROJECT_NAME}_SOURCE_DIR: ${${MYPROJECT_NAME}_SOURCE_DIR}")
+    message("         ${MYPROJECT_NAME}_BINARY_DIR: ${${MYPROJECT_NAME}_BINARY_DIR}")
 
     message("         CMAKE_PROJECT_NAME: ${CMAKE_PROJECT_NAME}")
     message("         CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
@@ -79,7 +79,8 @@ endif()
 ###########################################
 configure_file (
   "${PROJECT_SOURCE_DIR}/CMake/Config.h.in"
-  "${PROJECT_BINARY_DIR}/CmakeFilesHeader/NPTrackingToolsConfig.h")
+  "${PROJECT_BINARY_DIR}/CmakeFilesHeader/NPTrackingToolsConfig.h"
+  )
 if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
     message("    Creating configuration file Config.h in ${PROJECT_BINARY_DIR}/CmakeFilesHeader/NPTrackingToolsConfig.h")
 endif()
@@ -194,8 +195,6 @@ if(${PROJECT_NAME}_USE_FAKE_NPAPI)
     set(CONF_LIBRARY_DIRS "${${PROJECT_NAME}_INSTALL_DIR}/lib" "${${PROJECT_NAME}_INSTALL_DIR}/bin")
     # Binary folder
     set(CONF_BINARY_DIR "${PROJECT_BINARY_DIR}")
-    # Build folder
-    set(CONF_BUILD_DIR "${PROJECT_BINARY_DIR}")
     # Install folder
     set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
     # Flag for libraries
@@ -253,8 +252,6 @@ if(${PROJECT_NAME}_USE_FAKE_NPAPI)
     set(CONF_LIBRARY_DIRS "${${PROJECT_NAME}_INSTALL_DIR}/lib" "${${PROJECT_NAME}_INSTALL_DIR}/bin")
     # Binary folder
     set(CONF_BINARY_DIR "${PROJECT_BINARY_DIR}")
-    # Build folder
-    set(CONF_BUILD_DIR "${PROJECT_BINARY_DIR}")
     # Install folder
     set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
     # Flag for libraries
@@ -368,9 +365,7 @@ else()
         # Library Folders
         set(CONF_LIBRARY_DIRS ${TrackingToolsAPI_LIB_DIR})
         # Binary folder
-        set(CONF_BINARY_DIR "${PROJECT_BINARY_DIR}")
-        # Build folder
-        set(CONF_BUILD_DIR "${PROJECT_BINARY_DIR}")
+        set(CONF_BINARY_DIR ${PROJECT_BINARY_DIR})
         # Install folder
         set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
         # Flag for libraries
@@ -433,8 +428,6 @@ else()
         set(CONF_LIBRARY_DIRS "${${PROJECT_NAME}_INSTALL_DIR}/lib" "${${PROJECT_NAME}_INSTALL_DIR}/bin")
         # Binary folder
         set(CONF_BINARY_DIR ${${PROJECT_NAME}_INSTALL_DIR}/bin)
-        # Build folder
-        set(CONF_BUILD_DIR "${PROJECT_BINARY_DIR}")
         # Install folder
         set(CONF_INSTALL_DIR "${${PROJECT_NAME}_INSTALL_DIR}")
         # Flag for libraries
