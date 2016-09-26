@@ -18,7 +18,7 @@ set(PROJECT_NAME "BiiGOptitrack" CACHE STRING "")
 project(${PROJECT_NAME})
 
 # Version Control of the project
-set (${PROJECT_NAME}_VERSION_MAJOR 2)
+set (${PROJECT_NAME}_VERSION_MAJOR 3)
 set (${PROJECT_NAME}_VERSION_MINOR 0)
 message("Version: ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}")
 
