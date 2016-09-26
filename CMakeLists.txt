@@ -31,7 +31,7 @@ set(${PROJECT_NAME}_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/install" CACHE PATH
 option(${PROJECT_NAME}_BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" OFF)
 option(${PROJECT_NAME}_CMAKE_DEBUG_FLAG "Create and install the HTML based API documentation (requires Doxygen)" ON)
 # Create variable for packing 
-option(${PROJECT_NAME}_BUILD_PACKAGING "Support for CPack packaging" ON)
+option(${PROJECT_NAME}_BUILD_PACKAGING "Support for CPack packaging" OFF)
 
 # BiiGOptitrack Options
 option(${PROJECT_NAME}_USE_FAKE_NPAPI "Fake Library NPTrackingTools" OFF)
@@ -59,6 +59,14 @@ message(STATUS "${PROJECT_NAME} ${${PROJECT_NAME}_VERSION}")
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND APPLE)
   set(CMAKE_CXX_FLAGS "-stdlib=libstdc++ ${CMAKE_CXX_FLAGS}")
+endif()
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+  set(CMAKE_CONFIGURATION_TYPES "Release;RelWithDebInfo" CACHE STRING "" FORCE)
 endif()
 
 cma_configure_projects()

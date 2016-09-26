@@ -1,8 +1,0 @@
-# - Config file for the @PROJECT_NAME@ package
-
-if(EXISTS "@CONF_INSTALL_DIR@/@PROJECT_NAME@Config.cmake")
-  file(REMOVE "@CONF_INSTALL_DIR@/@PROJECT_NAME@Config.cmake")
-endif()
-
-file(COPY "@PROJECT_BINARY_DIR@/@PROJECT_NAME@ConfigInstall.cmake" DESTINATION @CONF_INSTALL_DIR@)
-file(RENAME "@CONF_INSTALL_DIR@/@PROJECT_NAME@ConfigInstall.cmake" "@CONF_INSTALL_DIR@/@PROJECT_NAME@Config.cmake")
