@@ -87,7 +87,7 @@ endif()
 configure_file (
   "${PROJECT_SOURCE_DIR}/CMake/Config.h.in"
   "${PROJECT_BINARY_DIR}/CmakeFilesHeader/BiiGOptitrackControlConfig.h"
-  FORCE)
+    )
 if(${PROJECT_NAME}_CMAKE_DEBUG_FLAG)
     message("    Creating configuration file Config.h in ${PROJECT_BINARY_DIR}/CmakeFilesHeader/BiiGOptitrackControlConfig.h")
 endif()
